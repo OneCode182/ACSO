@@ -1,0 +1,45 @@
+	Input
+	Store v		/Entrada de casos 
+	Clear
+	Store i		/i=0
+wh,	Load i
+	Subt v		/ac = i-v
+	Skipcond 000	/ i < v
+	Jump else
+	Input 
+	Store suma_n	/Entrada de n
+	Input
+	Store suma_m	/Entrada de m
+	JnS suma	/ac = suma de n a m
+	Output
+	Load one
+	Add i
+	Store i		/i=i+1
+	Jump wh
+else, 	Halt
+i,	Dec 12
+v,	Dec 13
+one, 	Dec 1
+/Suma desde n hasta m
+suma,	Dec 10
+	Clear		/Cero
+	Store res	/variable para el resultado igual a 0
+while,	Load suma_n	
+	Subt suma_m
+	Skipcond 800	/ n-m > 0
+	Jump if_w
+	Jump end_w
+if_w,	Load res
+	Add suma_n
+	Store res	/res = res + n
+	Load suma_u
+	Add suma_n
+	Store suma_n	/n = n + 1
+	Jump while
+end_w,	Load res
+	Jumpi suma
+suma_n,	Dec	10
+suma_m,	Dec	20
+suma_u,	Dec	1
+res,	Dec	30
+		

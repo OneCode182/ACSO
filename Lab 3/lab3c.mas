@@ -1,0 +1,114 @@
+	Input
+	Store n
+	Clear
+	Store i		/i = 0
+while,	Load i
+	Subt n		/ AC = i - n
+	Skipcond 000	/i < n
+	Halt		/fin programa
+	Input
+	Store a		/Input a
+	Input 
+	Store b		/Input b
+	Input
+	Store c		/Input c
+	Load b
+	Store mult_a	/mult_a = b
+	Store mult_b	/mult_b = b
+	JnS mult
+	Store b		/b = b^2
+	Load a
+	Store mult_a	/mult_a = a
+	Load four
+	Store mult_b	/mult_b = 4
+	JnS mult
+	Store a		/a = 4a
+	Store mult_a	/mult_a = a
+	Load c
+	Store mult_b	/mult_b = c
+	JnS mult
+	Store c		/c = 4ac
+	Load b	
+	Subt c
+	Store res	/res = b^2 -4ac
+	JnS	quant
+	Load i
+	Add one
+	Store i		/i = i + 1
+	Jump while
+n,	DEC 10
+a,	DEC 11
+b,	DEC 12
+c,	DEC 13
+i, 	DEC 14
+four,	DEC 4
+//multiplicacion de dos numeros
+mult,	DEC 99
+	Clear 
+	Store sign	/sign = 0
+	Load mult_a
+	Skipcond 000	/mult_a < 0
+	Jump mult_s	
+	Clear
+	Subt mult_a
+	Store mult_a	/mult_a = -mult_a
+	Load sign
+	Add mult_one
+	Store sign	/sign = sign + 1
+mult_s, Load mult_b
+	Skipcond 000	/mult_b < 0
+	Jump begin
+	Clear
+	Subt mult_b
+	Store mult_b	/mult_b = -mult_b 
+	Load sign
+	Add mult_one
+	Store sign	/sign = sign + 1
+begin,	Clear
+	Store mult_i	/mult_i = 0
+	Store mult_m	/mult_m = 0
+mult_w,	Load mult_i
+	Subt mult_a
+	Skipcond 000 	/ i < a
+	Jump mult_e
+	Load mult_m
+	Add mult_b
+	Store mult_m	/mult_m = mult_m + mult_b
+	Load mult_i
+	Add mult_one
+	Store mult_i	/mult_i = mult_i + 1
+	Jump mult_w
+mult_e,	Load sign
+	Subt mult_one	/ AC = sign - 1	
+	Skipcond 400	/ sign == 0, , aqui se verifica si solo uno de los numeros es negativo la respuesta de la mult es negativa	
+	Jump end_m
+	Clear
+	Subt mult_m
+	Store mult_m	/mult_m	= -mult_m
+end_m,  Load mult_m	
+	JumpI mult
+mult_a, DEC 11
+mult_b, DEC 22
+mult_i, DEC 44
+mult_m,	DEC 33
+mult_one, DEC 1
+sign,	DEC 0
+//Cantidad de raices de la cuadratica
+quant,	DEC 10
+	Load res
+	Skipcond 000	/res < 0, no hay raices reales
+	Jump equal
+	Clear
+	Output
+	Jump end
+equal,	Skipcond 400	/res == 0, la raiz es cero hay una raiz
+	Jump pos
+	Load one
+	Output
+	Jump end
+pos,	Load two 	/solo queda la opcion de que haya dos raices
+	Output
+end, 	JumpI quant
+two,	DEC 2
+one,	DEC 1
+res,	DEC 10
