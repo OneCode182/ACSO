@@ -1,0 +1,205 @@
+/ Titulo: Laboratorio 4 Punto b
+/ Autor: Sergio Silva 
+/ @OneCode182
+
+INPUT        // Lee el número de casos
+STORE N
+
+LOOP,   LOAD N
+        SKIPCOND 800  //  ¿N > 0?
+        JUMP END    // No, Salta al final
+	SUBT ONE    // Si, restamos uno y guardamos en N
+	STORE N
+	INPUT
+	STORE belgica
+	STORE div_a // div_a = belgica
+	INPUT
+	STORE inglaterra
+	INPUT
+	STORE noruega
+	INPUT
+	STORE irlanda
+	STORE mcd_b
+	INPUT
+	STORE francia
+	STORE mcd_a
+	JNS MCD
+	STORE mcd_a
+	load noruega
+	STORE mcd_b
+	JNS MCD
+	STORE mcd_a
+	load inglaterra
+	STORE mcd_b
+	JNS MCD
+	STORE mcd_a
+	load belgica
+	STORE mcd_b
+	JNS MCD
+	OUTPUT
+	STORE div_b // div_b = mcd_total
+	JNS DIV
+	OUTPUT
+	STORE total
+	LOAD inglaterra
+	STORE div_a // div_a = ingalterra
+	JNS DIV
+	OUTPUT
+	ADD total
+	STORE total
+	LOAD noruega
+	STORE div_a // div_a = noruega
+	JNS DIV
+	OUTPUT
+	ADD total
+	STORE total
+	LOAD irlanda
+	STORE div_a // div_a = irlanda
+	JNS DIV
+	OUTPUT
+	ADD total
+	STORE total
+	LOAD francia
+	STORE div_a // div_a = francia
+	JNS DIV
+	OUTPUT
+	ADD total
+	STORE total
+	OUTPUT
+	JUMP LOOP
+END,	HALT
+ONE,	DEC 1
+N,      DEC 100
+belgica, DEC 158
+inglaterra, DEC 159
+noruega, DEC 160
+irlanda, DEC 161
+francia, DEC 162
+total, DEC 163
+
+/
+/maximo comun divisor MCD(a,b)
+/
+MCD, DEC 0
+	load mcd_a
+	store abs_n
+	JnS abs
+	Store new_a1 / |a|
+	load mcd_b
+	store abs_n
+	JnS abs
+	Store new_b1 / |b|
+whilemcd, load new_b1
+	skipcond 400 // b =0?
+	jump body1 //No, salta body1
+	jump endmcd //Si, salta endmcd
+body1,	load new_a1
+	store mod_a // mod_a = mcd_a
+	load new_b1
+	store new_a1 // mcd_a = mcd_b
+	store mod_b // mod_b = mcd_b
+	JNS MOD
+	store new_b1 // mcd_b = a%b
+	jump whilemcd
+endmcd,	load new_a1 // return mcd_a
+	JUMPI MCD
+mcd_a,	dec 0
+mcd_b,	dec 0
+new_a1,	dec 0
+new_b1,  dec 0
+/
+/División entera de div(a,b)
+/
+DIV, DEC 0
+	clear
+	STORE div_c	/c=0
+	Load div_a
+	Store abs_n
+	JnS abs
+	Store new_a2	/|a|
+	Load div_b
+	Store abs_n
+	JnS abs
+	Store new_b2	/|b|
+	load new_a2	
+whilediv, subt new_b2
+	Store new_a2
+	skipcond 000	/a<b
+	Jump whilebodydiv //No, jump whilebodydiv
+	Jump endwhilediv //Si, jump endwhilediv
+whilebodydiv, load div_c
+	add ONE
+	store div_c
+	load new_a2
+	Jump whilediv		
+endwhilediv, load div_a
+	Skipcond 000	/div_a<0
+	Jump ansb1 /evalua si b es negativo
+	clear
+	Subt div_c
+	Store div_c	/si c <0
+ansb1, 	load div_b
+	skipcond 000 	/div_b<0
+	jump return1	/return el resultado
+	clear
+	Subt div_c
+	Store div_c
+return1, Load div_c
+	JumpI DIV	/return C
+div_a,	dec 0
+div_b,	dec 0
+div_c,	dec 0
+new_a2,	dec 0
+new_b2,	dec 0
+/
+/
+/residuo mod(a,b)
+/
+MOD, DEC 0
+	load mod_b
+	Store abs_n
+	JnS abs
+	Store new_b
+	Load mod_a
+	Store abs_n
+	JnS abs
+while,	Store new_a
+	subt new_b
+	skipcond 000	/a<b
+	Jump whilebody	//No, jump whilebody
+	Jump endwhile	//Si, jump endwhile
+whilebody, load new_a
+	subt new_b
+	store new_a
+	jump while		
+endwhile, load mod_a
+	Skipcond 000	/mod_a<0
+	Jump ansb	/verifica si b<0
+	clear
+	Subt new_a
+	Store new_a	/si a <0 
+ansb,	load mod_b
+	Skipcond 000	/mod_b<0
+	Jump return	/return el resultado
+	clear
+	Subt new_a
+	Store new_a	/si a <0 
+return,	Load new_a
+	JumpI MOD	/return new_a
+mod_a,	dec 0
+mod_b,	dec 0
+new_a,	dec 0
+new_b,	dec 0
+/
+/Funcion para hallar valor absoluto de un numero n
+/
+abs,	DEC 0
+	Load abs_n
+	skipcond 000 // abs_n<0?
+	Jump abs_end
+	CLEAR
+	Subt abs_n
+	Store abs_n
+abs_end, Load abs_n
+	JumpI abs
+abs_n,	DEC 0
