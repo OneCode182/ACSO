@@ -1,0 +1,3 @@
+POINT a) compare3.hdl
+POINT b) sum3.hdl
+POINT c) complement1.hdl
