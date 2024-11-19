@@ -1,0 +1,1 @@
+POINT a) word.hdl -> ELSANTA DIR \LAB7
