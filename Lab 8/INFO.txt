@@ -1,0 +1,2 @@
+============== LAB 8 ==============
+POINT a) lab8a.s -> ELS4NTA DIR \ LAB 9
